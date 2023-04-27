@@ -2,10 +2,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 
-
-// export default function handler(req, res) {
-//   res.json(req.method);
-// }
 export default async function handler(req, res) {
   const {method} = req;
   await mongooseConnect();
