@@ -6,7 +6,6 @@ export default function Nav() {
   const inactiveLink = 'flex gap-1 p-1';
   const activeLink = inactiveLink+' bg-white text-blue-900 rounded-l-lg'
   const router = useRouter();
-  console.log(router);
   const {pathname} = router;
 
   return (
