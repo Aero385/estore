@@ -113,7 +113,7 @@ function Categories({swal}){
       </label>
         <form onSubmit={saveCategory}>
           <div className="flex gap-1">
-          <input 
+          <input св
             type="text" 
             placeholder={'Category name'}
             value={name}

@@ -79,9 +79,21 @@ export default function ProductForm({
       })
     }
 
+    // const propertiesToFill = [];
+    // if(categories.length > 0 && category) {
+    //   let catInfo = categories.find(({_id}) => _id === category);
+    //   propertiesToFill.push(...catInfo.properties);
+    //   while(catInfo?.parent?._id) {
+    //     const parentCat = categories.find(({_id}) => _id === catInfo?.parent?._id);
+    //     propertiesToFill.push(...parentCat.properties);
+    //     catInfo = parentCat;
+    //   }
+    // }
+
     const propertiesToFill = [];
-    if(categories.length > 0 && category) {
+    if (categories.length > 0 && category) {
       let catInfo = categories.find(({_id}) => _id === category);
+      console.log(catInfo)
       propertiesToFill.push(...catInfo.properties);
       while(catInfo?.parent?._id) {
         const parentCat = categories.find(({_id}) => _id === catInfo?.parent?._id);
@@ -109,7 +121,7 @@ export default function ProductForm({
           </select>
           {propertiesToFill.length > 0 && propertiesToFill.map(p => (
             <div className="flex gap-1">
-              <div>{p.name}</div>
+              <div className="w-max">{p.name}</div>
               <select 
                 value={productProperties[p.name]}
                 onChange={ev => setProductProp(p.name, ev.target.value)}
