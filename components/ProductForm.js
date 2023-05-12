@@ -79,17 +79,6 @@ export default function ProductForm({
       })
     }
 
-    // const propertiesToFill = [];
-    // if(categories.length > 0 && category) {
-    //   let catInfo = categories.find(({_id}) => _id === category);
-    //   propertiesToFill.push(...catInfo.properties);
-    //   while(catInfo?.parent?._id) {
-    //     const parentCat = categories.find(({_id}) => _id === catInfo?.parent?._id);
-    //     propertiesToFill.push(...parentCat.properties);
-    //     catInfo = parentCat;
-    //   }
-    // }
-
     const propertiesToFill = [];
     if (categories.length > 0 && category) {
       let catInfo = categories.find(({_id}) => _id === category);
@@ -120,28 +109,30 @@ export default function ProductForm({
             ))}
           </select>
           {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-            <div className="flex gap-1">
-              <div className="w-max">{p.name}</div>
-              <select 
-                value={productProperties[p.name]}
-                onChange={ev => setProductProp(p.name, ev.target.value)}
-              >
-                {p.values.map(v => (
-                  <option value={v}>{v}</option>
-                ))}
-              </select>
+            <div className="">
+              <label className="w-max">{p.name[0].toUpperCase()+p.name.substring(1)}</label>
+              <div>
+                <select 
+                  value={productProperties[p.name]}
+                  onChange={ev => setProductProp(p.name, ev.target.value)}
+                >
+                  {p.values.map(v => (
+                    <option value={v}>{v}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           ))}
           <label>
             Photos
           </label>
           <div className="mb-2 flex flex-wrap gap-2">
-            <label className="cursor-pointer w-24 h-24 text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 flex flex-col items-center justify-center">
+            <label className="cursor-pointer w-24 h-24 text-sm gap-1 text-primary rounded-md bg-white shadow-md border border-primary flex flex-col items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
               </svg>
               <div>
-                Upload
+                Add image
               </div>
               <input type="file" className="hidden" onChange={uploadImages}/>
             </label>
@@ -156,7 +147,7 @@ export default function ProductForm({
               setList={updateImagesOrder}
             >
               {!!images?.length && images.map(link => (
-                <div className="h-24" key={link}>
+                <div className="h-24 bg-white p-2 shadow-smrounded-sm border border-gray-200" key={link}>
                   <img className=" rounded-lg" src={link} alt=''/>
                 </div>
               ))}
