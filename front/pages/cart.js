@@ -11,8 +11,8 @@ import styled from "styled-components";
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.2fr .8fr;
-  gap: 40px;
-  margin-top: 40px;
+
+  margin: 40px;
 `;
 
 const Box = styled.div`
@@ -74,10 +74,35 @@ export default function CartPage() {
   function lessOfThisProduct(id){
     removeProduct(id)
   }
+
+  async function goToPayment(){
+    const response = await axios.post('/api/checkout', {
+      name, email, city, postalCode, streetAddress, country,
+      cartProducts,
+    });
+    if(response.data.url) {
+      window.location = response.data.url;
+    }
+  }
+
 let total = 0;
 for(const productId of cartProducts) {
   const price = products.find(p => p._id === productId)?.price || 0;
   total += price; 
+}
+
+if (window.location.href.includes('success')){
+  return (
+    <>
+      <Header/>
+      <ColumnsWrapper>
+        <Box>
+          <h1>Thanks for your order</h1>
+          <p>We will email you when your order would be sent!</p>
+        </Box>
+      </ColumnsWrapper>
+    </>
+  )
 }
   return(
     <>
@@ -137,12 +162,14 @@ for(const productId of cartProducts) {
                 type="text" 
                 placeholder="Name" 
                 value={name} 
+                name="name"
                 onChange={(ev) => setName(ev.target.value)}
               />
               <Input 
                 type="text" 
                 placeholder="Email" 
                 value={email} 
+                name="email"
                 onChange={(ev) => setEmail(ev.target.value)}
               />
               <CityHolder>
@@ -150,12 +177,14 @@ for(const productId of cartProducts) {
                   type="text" 
                   placeholder="City" 
                   value={city} 
+                  name="city"
                   onChange={(ev) => setCity(ev.target.value)}
                 />
                 <Input 
                   type="text" 
                   placeholder="Postal Code" 
                   value={postalCode} 
+                  name="postalCode"
                   onChange={(ev) => setPostalCode(ev.target.value)}
                 />
               </CityHolder>
@@ -163,15 +192,21 @@ for(const productId of cartProducts) {
                 type="text" 
                 placeholder="Street Address" 
                 value={streetAddress} 
+                name="strettAddress"
                 onChange={(ev) => setStreetAddress(ev.target.value)}
               />
               <Input 
                 type="text" 
                 placeholder="Country" 
                 value={country} 
+                name="country"
                 onChange={(ev) => setCountry(ev.target.value)}
               />
-              <Button black block>Continue to payment</Button>
+              <Button 
+                black 
+                block 
+                onClick={goToPayment}
+              >Continue to payment</Button>
             </Box>
           )}
         </ColumnsWrapper>
