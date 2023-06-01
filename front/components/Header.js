@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Center from "./Center";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
+import BarsIcon from "./icons/Bars";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -19,13 +20,22 @@ const Wrapper = styled.div`
 `;
 
 const StyledNav = styled.nav`
-  display: flex;
+  display: block;
   gap: 15px
 `;
 
 const NavLink = styled(Link)`
   color: #aaa;
   text-decoration: none;
+`;
+
+const NavButton = styled.button`
+  background-color: transparent;
+  width: 30px;
+  heigth: 30px;
+  border: 0;
+  color: white;
+  cursor: pointer;
 `;
 
 export default function Header() {
@@ -42,6 +52,9 @@ export default function Header() {
             <NavLink href={'/account'}>Account</NavLink>
             <NavLink href={'/cart'}>Cart ({cartProducts.length})</NavLink>
           </StyledNav>
+          <NavButton>
+            <BarsIcon/>
+          </NavButton>
         </Wrapper>
       </Center>
     </StyledHeader>
