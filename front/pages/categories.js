@@ -1,9 +1,54 @@
 import Center from "@/components/Center";
 import Header from "@/components/Header";
+import ProductBox from "@/components/ProductBox";
 import Title from "@/components/Title";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Category } from "@/models/Category";
 import { Product } from "@/models/Product";
+import Link from "next/link";
+import styled from "styled-components";
+
+
+const CategoryGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+`; 
+
+const CategoryTitle = styled.div`
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 0; 
+  gap: 10px;
+  a{
+    color: #444;
+    display: inline-block
+  }
+  align-items: center;
+  h2{
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+`;
+
+const CategoryWrapper = styled.div`
+  margin-bottom: 40px;
+`;
+
+const ShowAllSquare = styled(Link)`
+  background-color: #ddd;
+  height: 160px;
+  border-radius: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #555;
+  text-decoration: none;
+
+`;
 
 export default function CategoriesPage({mainCategories, categoriesProducts}) {
   return (
@@ -11,14 +56,22 @@ export default function CategoriesPage({mainCategories, categoriesProducts}) {
       <Header/>
       <Center>
         {mainCategories.map(cat => (
-          <div>
-            <h2>{cat.name}</h2>
-            <div>
+          <CategoryWrapper>
+            <CategoryTitle>
+              <h2>{cat.name}</h2>
+              <div>
+                <Link href={'/category/'+cat._id}>Show all {cat.name}</Link>
+              </div>
+            </CategoryTitle>                
+            <CategoryGrid>
               {categoriesProducts[cat._id].map(p => (
-                <div>{p.title}</div>
+                <ProductBox {...p}/>
               ))}
-            </div>
-          </div>
+              <ShowAllSquare href={'/category/'+cat._id}>
+                Show more &rarr;
+              </ShowAllSquare>
+            </CategoryGrid>
+          </CategoryWrapper>
         ))}
       </Center>
     </>
